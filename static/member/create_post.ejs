@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/class.css">
+    <link rel="stylesheet" href="../css/Atag.css">
+
+    
+    <title>Create post</title>
+</head>
+<body style="background-color: #f1f1f1"> 
+    <div id="top"></div>
+    <div id="login_box">
+        <div id="login_header">Create post</div>
+        <form action="/member/creating" method="post" enctype="multipart/form-data">
+            <div>
+                <div>
+                    <label for="title" id="Label_style">Title</label>
+                </div>
+                <div>
+                    <input type="text" id="input_style" placeholder="Enter your title" name="title" required>
+                </div>
+            </div>
+            <div >
+            </div>
+                <div>
+                    
+                    <label for="title" id="Label_style">Body</label>
+                <div>
+                    <!-- <input type="text" id="input_style"  placeholder="Enter your body" name="body" required> -->
+                    <textarea id="text_box" rows="auto" cols="auto"  maxlength="1024" name="body" placeholder="Enter your body" required></textarea>
+                </div>
+
+                <div>
+                    <label for="title" id="Label_style">upload file</label>
+                </div>
+                <div id="upload">
+                    <input  type="file" name="file" id="upload_button" name="upload-file" 
+                    accept="image/png, image/jpeg ,video/mp4" multiple>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" id="submit_button" >Create</button>
+            </div>
+    
+    
+            <div id="Callback_style">
+                <%=locals?.msg?msg:""%>
+            </div>
+        </form>
+        <div>
+            <a href="/member/member" id="Link_Style">Homepage</a>    
+            <!-- <a href="/member/member">Main Page</a> -->
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/class.css">
+    <link rel="stylesheet" href="../css/Atag.css">
+    <script src="../script/script.js"></script>
+    <!-- <link rel="stylesheet" href="header_css.css">
+    <link rel="stylesheet" href="aside_css.css">  
+    <link rel="stylesheet" href="Main_Part_css.css">   -->
+    
+</head>
+<body>
+    <header >
+        <div id="h1"><img src="../images/kita.png" id="logo"></div>
+        <div id="title"><a href="/member/member" style="color: white;">Metro</a></div>
+        <div id="h2">
+            <div id="search_box">Welcome</div>
+            <a href="/member/create"><div id="Create_post" >new post </div></a>
+        </div>
+        <div id="h3"><%=locals?.username?username:""%> <span onclick="usermenu_show()">
+            <img style="width: 20px; cursor: pointer;  float: right; margin-top: 13px; " src="../images/downarrow.png" alt="">
+            </span>
+        </div>        
+    </header>
+    <aside_half class="half-menu">
+        <div class="menu purple">
+            <div  id="menu_headerHide" style="background-color:#77569c;
+             font-size: 20px;">
+                <!-- <span onclick="show_menu()"><img id="menu_symbolHide" src="../images/menu_symbolFull.png" alt=""></span> -->
+            </div>
+            <a href="#"> <div class="icon_half">1</div></a>
+            <a href="#"> <div class="icon_half">2</div></a>
+            <a href="#"> <div class="icon_half">3</div></a>
+        
+        </div>
+        <div class="menu purple">
+            <div class="channel"></div>
+            <a href="#"> <div class="icon_half">1</div></a>
+            <a href="#"> <div class="icon_half">2</div></a>
+            <a href="#"> <div class="icon_half">3</div></a>
+            <a href="#"> <div class="icon_half">4</div></a>
+            
+            
+        </div>
+    </aside_half>
+
+    <aside_full class="full-menu">
+        <div class="menu purple">
+        <div  id="menu_header" style="background-color:#77569c;
+             font-size: 20px;">menu 
+            <!-- <span onclick="hide_menu()"><img id="menu_symbol" src="../images/menu_symbol.png" alt=""></span> -->
+        </div>
+            <a href="/member/member"><div class="channel">home</div></a>
+            <!-- <a href="#"><div class="channel">popular </div></a> -->
+        </div>
+        <!-- <div class="menu purple">
+            <div class="channel" style="text-align: left; padding-left: 15px;
+             background-color:#77569c;
+             font-size: 20px;">your channel</div>
+            <a href="#"> <div class="channel">channel 1</div></a>
+            <a href="#"> <div class="channel">channel 2</div></a>
+            <a href="#"> <div class="channel">channel 3</div></a>
+            <a href="#"> <div class="channel">channel 4</div></a>
+            
+        </div> -->
+    </aside_full>
+    
+    
+        
+    <sidebar id="side">
+        <usermenu class="user_menu">
+            
+                <a href="/member/logout"><div id="userMenu">logout</div></a>
+                <a href="/member/change?UID=<%=UID%>"><div id="userMenu" style="margin-top: 60px;">change_username</div></a>
+            <!-- <div>
+                <a href="/member/change_username"><div id="userMenu">change username</div></a>
+            </div> -->
+        </usermenu>
+        
+            <div id="suggestion_box">
+                <div id="suggestion_header">Suggestion Posts</div>
+                <div id="article" >
+                    <div id="article_header"><a href="/member/post?PID=<%=information[0].PID%>">
+                        <%=information[0].title%></a></div>
+                    <div id="article_date"><span id="date1"></span></div>
+                    <div id="article_body"><%=information[0].body_text%></div>
+                </div>
+                <div id="article">
+                    <div id="article_header"><a href="/member/post?PID=<%=information[1].PID%>">
+                        <%=information[1].title%></a></div>
+                    <div id="article_date"><span id="date2"></span></div>
+                    <div id="article_body"><%=information[1].body_text%></div>
+                </div>
+                <div id="article">
+                    <div id="article_header""><a href="/member/post?PID=<%=information[2].PID%>"><%=information[2].title%></a></div>
+                    <div id="article_date"><span id="date3"></span></div>
+                    <div id="article_body"><%=information[2].body_text%></div>
+                </div>
+                
+            </div>
+        
+    </sidebar>
+
+    
+    
+    <main>
+        
+        <div id="main_part" class="white">
+            <div style="display: block; width: 100%; height: 80px; overflow: hidden;"></div>
+            <div class="post" >
+                <div>
+                    <div id="title_box"><%=post[0].title%></div>
+                    <div id="author_box"><%=post[0].username%>'s &nbsp; Post &nbsp;&nbsp;
+                        Date:&nbsp;
+                         <span id="date4"></span>&nbsp;
+                         
+                    </div>
+                    <div id="body_box"> &emsp;&emsp;
+                        <%=post[0].body_text%></div>
+                    <div id="media"> </div>
+                    
+                </div>
+            </div>
+            <div id="comment_section">
+                <div id="comment_header">Comments</div>
+                <div id="comment_zone">
+                    <form action="/member/comment?UID=<%=UID%>&PID=<%=PID%>" method="post">
+                        <div>
+                            <textarea id="comment_box" rows="auto" cols="auto"  maxlength="1024" name="comment" placeholder="Enter your Comment" required></textarea>
+
+                        </div>
+                        <div>
+                            <button type="submit" id="comment_submit" >Submit</button>
+                        </div>
+                    </form> 
+                    <div id="Callback_style">
+                        <%=locals?.msg?msg:""%>
+                    </div>
+                    
+                </div>
+            </div>
+    </main>
+
+    
+
+
+    <!-- <div>
+        <div>กรอกชื่อผู้ใช้ &nbsp;<input type="text"></div>
+    </div> -->
+    <!-- <div id="sticky1"> sticky note </div>
+    <div id="sticky2"> sticky note</div> -->
+    <script>
+        const time1 = new Date('<%=information[0].created_date%>');
+        const time2 = new Date('<%=information[1].created_date%>');
+        const time3 = new Date('<%=information[2].created_date%>');
+        
+        // console.log(time)
+        console.log("UID :",<%=UID%>)
+        console.log("PID :",<%=PID%>)
+
+        document.getElementById('date1').innerHTML = time1.toLocaleDateString();
+        document.getElementById('date2').innerHTML = time2.toLocaleDateString();
+        document.getElementById('date3').innerHTML = time3.toLocaleDateString();
+        
+        const time4 = new Date('<%=post[0].created_date%>');
+        document.getElementById('date4').innerHTML = time4.toLocaleDateString();
+        // console.log( <%=post.length%>)
+        
+        function resizeImg(img, height, width) {
+            img.height = height;
+            img.width = width;
+        }
+        
+        // for(let i = 0; i < <%=post.length%>; i++){
+        //     console.log(i)
+        //     var img = document.createElement("img");
+           
+        //     img.id  = "media_inside"
+        //     document.getElementById("media").appendChild(img);
+        // }
+        
+        if('<%=post[0].path%>' != null){
+            
+            <% for(var i=0; i<post.length; i++) {%>
+                var fileType = '<%=post[i].path%>';
+                var chk = fileType.length;
+                if(fileType[chk-1] == '4'){
+                    // console.log('<%=post[i].path%>')
+                    console.log('video found')
+                    var vid = document.createElement("video");
+                    vid.src = '<%=post[i].path%>';
+                    vid.id  = "media_inside"
+                    vid.controls = true;
+                    document.getElementById("media").appendChild(vid);
+                }else if(fileType[chk-1] ==  'g'){
+                    console.log('<%=post[i].path%>')
+                    console.log('picture found')
+                    var img = document.createElement("img");
+                    img.src = '<%=post[i].path%>';
+                    img.id  = "media_inside"
+                    document.getElementById("media").appendChild(img);
+                }
+                // console.log('<%=post[i].path%>')
+                // var img = document.createElement("img");
+                // img.src = '<%=post[i].path%>';
+                // img.id  = "media_inside"
+                // document.getElementById("media").appendChild(img);
+            <% } %>
+        }
+
+
+        
+        console.log(<%=comment.length%>)
+        console.log(typeof('<%=comment.length%>'))
+
+
+        // console.log(<%=comment.legnth%>)
+        if('<%=comment.legnth%>' != '0'){
+            <% for(var i=0; i< comment.length ; i++) {%>
+                var div = document.createElement('div');
+                // div.className = 'post';
+                div.id = 'div'+<%=i%>;
+                // div.innerHTML = '<h1>test</h1>'
+                document.getElementById("comment_zone").appendChild(div);
+
+                var div = document.createElement('div');
+                div.className = 'comment_list'
+                div.innerHTML = '<%=comment[i].username%>';
+                div.id = 'Co'+<%=i%>;
+                
+                document.getElementById('div'+<%=i%>).appendChild(div);
+
+                var span = document.createElement('span');
+                span.id = 'D'+<%=i%>;
+                span.className = 'Date_comment'
+                // span.innerHTML = Created_date.toLocaleDateString();
+                document.getElementById('Co'+<%=i%>).appendChild(span);
+
+                var comment_date = new Date('<%=comment[i].Comment_Date%>');
+                document.getElementById('D'+<%=i%>).innerHTML = '&nbsp&nbsp&nbsp&nbspDate:&nbsp;'+comment_date.toLocaleDateString()+
+                '&nbsp&nbsp&nbsp<%=comment[i].Comment_Time%>';
+
+                var div = document.createElement('div');
+                div.className = 'Comment_body'
+                div.innerHTML = '&emsp;&emsp;&emsp;<%=comment[i].body%>';
+                // div.id = 'Co'+<%=i%>;
+           
+                document.getElementById('div'+<%=i%>).appendChild(div);
+
+            <% } %>
+
+        }
+
+        
+        // var img = document.createElement("img");
+        // img.src = '<%=post[0].path%>';
+        // img.id  = "media_inside";
+
+        // console.log('<%=post[0].path%>')
+        // console.log(img.src)
+        // document.getElementById("media").appendChild(img);
+
+        
+    </script>
+
+</body>
+</html>

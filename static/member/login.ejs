@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/class.css">
+    <link rel="stylesheet" href="../css/Atag.css">
+    <title>Login</title>
+</head>
+<body style="background-color: #f1f1f1"> 
+    <div id="top"></div>
+    <div id="login_box">
+        <div id="login_header">Login</div>
+        <form action="/member/verify" method="post">
+            <div>
+                <div>
+                    <label for="username" id="Label_style">Username</label>
+                </div>
+                <div>
+                    <input type="text"  id="input_style" placeholder="Enter your username" name = "username" required>
+
+                </div>
+            </div>
+            <div >
+            </div>
+                <div>
+                    <label for="password" id="Label_style" >Password</label>
+                <div>
+                    <input type="password"  id="input_style" placeholder="Enter your password" name = "password" required>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" id="submit_button" >Login</button>
+            </div>
+    
+    
+            <div id="Callback_style">
+                <%=locals?.msg?msg:""%>
+            </div>
+        </form>
+        <div>
+            <a href="/member/register" id="Link_Style">Register</a>    
+            <!-- <a href="/member/member">Main Page</a> -->
+        </div>
+    </div>
+    
+</body>
+</html>
