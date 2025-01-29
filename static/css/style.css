@@ -451,6 +451,32 @@ header{
     box-shadow:5px 5px #72725d;
 }
 
-
-
 /* comment section end */
+#change_title{
+    margin-left: 0;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    width: 95%;
+    height: auto;
+    resize: none;
+    border-style: none;
+    border-radius: 5px;
+    font-size: 20px;
+    /* box-shadow:5px 5px #72725d; */
+}
+
+#change_body{
+    margin-left: 0;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    width: 105%;
+    height: 20vh;
+    resize: none;
+    border-style: none;
+    border-radius: 5px;
+    font-size: 20px;
+    /* box-shadow:5px 5px #72725d; */
+}
+/* Edit post */
+
+/* Edit post end*/

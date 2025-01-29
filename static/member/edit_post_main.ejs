@@ -112,23 +112,55 @@
         
         <div id="main_part" class="white">
             <div style="display: block; width: 100%; height: 80px; overflow: hidden;"></div>
-            <div class="post" style="background-color: transparent;"><h1><a href="/member/edit_post?PID=<%=post[0].PID%>" style="color: blue;">Edit</a>
-                 <span style="float: right;"><a href="#" style="color: red;">Delete</a></span></h1></div>
+
+            <form id="target" action="/member/editting" method="post" enctype="multipart/form-data">
+                <div class="post" style="background-color: transparent;"><h1>Edit Post</h1></div>
             <div class="post" >
                 <div>
-                    <div id="title_box"><%=post[0].title%></div>
+                    <div id="title_box" style=" padding-top: 10px; ">
+                        <textarea name="title" id="change_title" maxlength="255"><%=post[0].title%></textarea></div>
                     <div id="author_box"><%=post[0].username%>'s &nbsp; Post &nbsp;&nbsp;
                         Date:&nbsp;
-                         <span id="date4"></span>&nbsp;
-                         
+                        <span id="date4"></span>&nbsp;
+                        
                     </div>
-                    <div id="body_box"> &emsp;&emsp;
-                        <%=post[0].body_text%></div>
-                    <div id="media"> </div>
-                    
+                    <div id="body_box" style="padding-left: 2%;"> &emsp;&emsp;
+                        <textarea name="body" id="change_body" maxlength="1024"><%=post[0].body_text%></textarea></div>
+                        <div id="media"> </div>
+                        
+                    </div>
+                    <div id="body_box" > 
+                        <div id="mainform" onclick="choice1_select()">
+                            <input type="radio" id="keep" name="choice" value="1">
+                            <label for="html">keep old media</label><br>
+
+                        </div>
+                        <div id="mainform" onclick="choice2_select()">
+                            <input type="radio" id="delete" name="choice" value="2">
+                            <label for="css">delete all media</label><br>
+                        </div>
+                        <div id="mainform" onclick="choice3_select()">
+                            <input type="radio" id="add" name="choice" value="3">
+                            <label for="javascript">add new media (replace all existed media in this post)</label><br><br>
+                        </div>
+                        <div> for upload need to choose (add new media)</div>
+                            <input  type="file" name="file"  name="upload-file" 
+                            accept="image/png, image/jpeg ,video/mp4" multiple> 
+                        <div>
+                            <button type="submit" id="submit_button" style="margin-left: 0px;" >Submit</button>
+                        </div>
+                        <div id="Callback_style">
+                            <%=locals?.msg?msg:""%>
+                        </div>
+
+
+                       
+
+                    </div>
                 </div>
-            </div>
-            <div id="comment_section">
+
+                </form>
+                <!-- <div id="comment_section">
                 <div id="comment_header">Comments</div>
                 <div id="comment_zone">
                     <form action="/member/comment?UID=<%=UID%>&PID=<%=PID%>" method="post">
@@ -145,7 +177,7 @@
                     </div>
                     
                 </div>
-            </div>
+            </div> -->
     </main>
 
     
@@ -178,6 +210,24 @@
             img.width = width;
         }
         
+//         document.mainForm.onclick = function(){
+//         var radVal = document.forms.mainForm.rads.value;
+//         result.innerHTML = 'You selected: '+radVal;
+// }   
+
+        function choice1_select(){
+            console.log('1')
+            document.getElementById('target').action = '/member/editting?choice=1'
+        }
+        function choice2_select(){
+            console.log('2')
+            document.getElementById('target').action = '/member/editting?choice=2'
+        }
+        function choice3_select(){
+            console.log('3')
+            document.getElementById('target').action = '/member/editting?choice=3'
+        }
+        
         // for(let i = 0; i < <%=post.length%>; i++){
         //     console.log(i)
         //     var img = document.createElement("img");
@@ -186,77 +236,80 @@
         //     document.getElementById("media").appendChild(img);
         // }
         
-        if('<%=post[0].path%>' != null){
+        // if('<%=post[0].path%>' != null){
             
-            <% for(var i=0; i<post.length; i++) {%>
-                var fileType = '<%=post[i].path%>';
-                var chk = fileType.length;
-                if(fileType[chk-1] == '4'){
-                    // console.log('<%=post[i].path%>')
-                    console.log('video found')
-                    var vid = document.createElement("video");
-                    vid.src = '<%=post[i].path%>';
-                    vid.id  = "media_inside"
-                    vid.controls = true;
-                    document.getElementById("media").appendChild(vid);
-                }else if(fileType[chk-1] ==  'g' || fileType[chk-1] == 'G'){
-                    console.log('<%=post[i].path%>')
-                    console.log('picture found')
-                    var img = document.createElement("img");
-                    img.src = '<%=post[i].path%>';
-                    img.id  = "media_inside"
-                    document.getElementById("media").appendChild(img);
-                }
-                // console.log('<%=post[i].path%>')
-                // var img = document.createElement("img");
-                // img.src = '<%=post[i].path%>';
-                // img.id  = "media_inside"
-                // document.getElementById("media").appendChild(img);
-            <% } %>
-        }
+        //     <% for(var i=0; i<post.length; i++) {%>
+        //         var fileType = '<%=post[i].path%>';
+        //         var chk = fileType.length;
+        //         if(fileType[chk-1] == '4'){
+        //             // console.log('<%=post[i].path%>')
+        //             console.log('video found')
+        //             var vid = document.createElement("video");
+        //             vid.src = '<%=post[i].path%>';
+        //             vid.id  = "media_inside"
+        //             vid.controls = true;
+        //             document.getElementById("media").appendChild(vid);
+
+                    
+        //         }else if(fileType[chk-1] ==  'g' || fileType[chk-1] == 'G'){
+        //             console.log('<%=post[i].path%>')
+        //             console.log('picture found')
+        //             var img = document.createElement("img");
+        //             img.src = '<%=post[i].path%>';
+        //             img.id  = "media_inside"
+        //             document.getElementById("media").appendChild(img);
+        //         }
+        //         // console.log('<%=post[i].path%>')
+        //         // var img = document.createElement("img");
+        //         // img.src = '<%=post[i].path%>';
+        //         // img.id  = "media_inside"
+        //         // document.getElementById("media").appendChild(img);
+        //     <% } %>
+        // }
 
 
         
-        console.log(<%=comment.length%>)
-        console.log(typeof('<%=comment.length%>'))
+        // console.log(<%=comment.length%>)
+        // console.log(typeof('<%=comment.length%>'))
 
 
         // console.log(<%=comment.legnth%>)
-        if('<%=comment.legnth%>' != '0'){
-            <% for(var i=0; i< comment.length ; i++) {%>
-                var div = document.createElement('div');
-                // div.className = 'post';
-                div.id = 'div'+<%=i%>;
-                // div.innerHTML = '<h1>test</h1>'
-                document.getElementById("comment_zone").appendChild(div);
 
-                var div = document.createElement('div');
-                div.className = 'comment_list'
-                div.innerHTML = '<%=comment[i].username%>';
-                div.id = 'Co'+<%=i%>;
+        // if('<%=comment.legnth%>' != '0'){
+        //     <% for(var i=0; i< comment.length ; i++) {%>
+        //         var div = document.createElement('div');
+        //         // div.className = 'post';
+        //         div.id = 'div'+<%=i%>;
+        //         // div.innerHTML = '<h1>test</h1>'
+        //         document.getElementById("comment_zone").appendChild(div);
+
+        //         var div = document.createElement('div');
+        //         div.className = 'comment_list'
+        //         div.innerHTML = '<%=comment[i].username%>';
+        //         div.id = 'Co'+<%=i%>;
                 
-                document.getElementById('div'+<%=i%>).appendChild(div);
+        //         document.getElementById('div'+<%=i%>).appendChild(div);
 
-                var span = document.createElement('span');
-                span.id = 'D'+<%=i%>;
-                span.className = 'Date_comment'
-                // span.innerHTML = Created_date.toLocaleDateString();
-                document.getElementById('Co'+<%=i%>).appendChild(span);
+        //         var span = document.createElement('span');
+        //         span.id = 'D'+<%=i%>;
+        //         span.className = 'Date_comment'
+        //         // span.innerHTML = Created_date.toLocaleDateString();
+        //         document.getElementById('Co'+<%=i%>).appendChild(span);
 
-                var comment_date = new Date('<%=comment[i].Comment_Date%>');
-                document.getElementById('D'+<%=i%>).innerHTML = '&nbsp&nbsp&nbsp&nbspDate:&nbsp;'+comment_date.toLocaleDateString()+
-                '&nbsp&nbsp&nbsp<%=comment[i].Comment_Time%>';
+        //         var comment_date = new Date('<%=comment[i].Comment_Date%>');
+        //         document.getElementById('D'+<%=i%>).innerHTML = '&nbsp&nbsp&nbsp&nbspDate:&nbsp;'+comment_date.toLocaleDateString()+
+        //         '&nbsp&nbsp&nbsp<%=comment[i].Comment_Time%>';
 
-                var div = document.createElement('div');
-                div.className = 'Comment_body'
-                div.innerHTML = '&emsp;&emsp;&emsp;<%=comment[i].body%>';
-                // div.id = 'Co'+<%=i%>;
+        //         var div = document.createElement('div');
+        //         div.className = 'Comment_body'
+        //         div.innerHTML = '&emsp;&emsp;&emsp;<%=comment[i].body%>';
+        //         // div.id = 'Co'+<%=i%>;
            
-                document.getElementById('div'+<%=i%>).appendChild(div);
+        //         document.getElementById('div'+<%=i%>).appendChild(div);
 
-            <% } %>
+        //     <% } %>
 
-        }
+        // }
 
         
         // var img = document.createElement("img");
