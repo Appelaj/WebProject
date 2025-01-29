@@ -115,7 +115,7 @@ router.post('/comment', (req, res) => {
 router.get('/password_change', (req, res) => {
     
     // console.log(req.query)   
-    console.log(Object.values(req.query))
+    // console.log(Object.values(req.query))
     res.render('member/change_password', {UID : Object.values(req.query)})
 });
 
@@ -160,9 +160,9 @@ router.post('/change_verify', (req, res) => {
     const sql = "UPDATE users SET username = ? WHERE UID = ?;"
     const sql2 = "SELECT * FROM users WHERE UID = ? AND PASSWORD = ?;"
     const UID = Object.values(req.query)
-    console.log("New Username :", username)
-    console.log("password:", password)
-    console.log(UID[0])
+    // console.log("New Username :", username)
+    // console.log("password:", password)
+    // console.log(UID[0])
     db.query(sql2,[UID[0], md5(password)], (err,results) => {
         if(err){
             console.log(err)
@@ -189,7 +189,7 @@ router.post('/change_verify', (req, res) => {
 router.post('/verify', (req, res) => {
     const {username, password} = req.body
     const sql = "SELECT * FROM users WHERE username = ? and password  = ? "
-
+   
     db.query(sql, [username, md5(password)], (err,results) => {
         if(err){
             console.log(err)
@@ -206,6 +206,7 @@ router.post('/verify', (req, res) => {
             }
         }
     })
+    
 });
 
 router.post('/registering', (req, res) => {
@@ -407,7 +408,7 @@ router.get('/your_post', (req, res) =>{
         res.redirect('/member/login')
     }
     
-})
+});
 
 router.get('/member', (req, res) =>{
     const username = req.cookies.username;
@@ -756,6 +757,7 @@ router.get('/delete', (req, res) =>{
         }
     })
 });
+
 
 
 router.get('/logout', (req, res) =>{
