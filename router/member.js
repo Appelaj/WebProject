@@ -729,6 +729,35 @@ router.post('/editting', (req, res) => {
     // db.query(sql1,[title, body, UID])
 });
 
+router.get('/delete', (req, res) =>{
+    var PID = parseInt(req.query.PID)
+    const sql1 = "DELETE FROM post WHERE PID = ? ;"
+    const sql2 = "DELETE FROM media WHERE PID = ? ;"
+    const sql3 = "DELETE FROM comments WHERE PID = ? ;"
+    console.log(PID)
+
+    db.query(sql1, PID, (err, results) =>{
+        if(err){
+            console.log(err)
+        }else{
+            db.query(sql2, PID, (err, results) =>{
+                if(err){
+                    console.log(err)
+                }else{
+                    db.query(sql3, PID, (err, results) =>{
+                        if(err){
+                            console.log(err)
+                        }else{
+                            res.redirect('/member/your_post')
+                        }
+                    })
+                }
+            })
+        }
+    })
+});
+
+
 router.get('/logout', (req, res) =>{
     const username = req.cookies.username;
     if(username){
