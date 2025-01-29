@@ -113,7 +113,7 @@
         <div id="main_part" class="white">
             <div style="display: block; width: 100%; height: 80px; overflow: hidden;"></div>
 
-            <form id="target" action="/member/editting" method="post" enctype="multipart/form-data">
+            <form id="target" action="/member/editting?PID=<%=PID%>" method="post" enctype="multipart/form-data">
                 <div class="post" style="background-color: transparent;"><h1>Edit Post</h1></div>
             <div class="post" >
                 <div>
@@ -217,15 +217,15 @@
 
         function choice1_select(){
             console.log('1')
-            document.getElementById('target').action = '/member/editting?choice=1'
+            document.getElementById('target').action = '/member/editting?choice=1&PID=<%=PID%>'
         }
         function choice2_select(){
             console.log('2')
-            document.getElementById('target').action = '/member/editting?choice=2'
+            document.getElementById('target').action = '/member/editting?choice=2&PID=<%=PID%>'
         }
         function choice3_select(){
             console.log('3')
-            document.getElementById('target').action = '/member/editting?choice=3'
+            document.getElementById('target').action = '/member/editting?choice=3&PID=<%=PID%>'
         }
         
         // for(let i = 0; i < <%=post.length%>; i++){

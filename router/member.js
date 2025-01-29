@@ -582,10 +582,151 @@ router.get('/edit_post', (req, res) =>{
 });
 
 router.post('/editting', (req, res) => {
-    const {title, body, choice} = req.body
-    console.log('title :',title)
-    console.log('body :',body)
-    console.log('choice :',req.query)
+    const {title, body} = req.body
+    const sql1 = "UPDATE post SET title = ?, body_text = ? WHERE PID = ?;"
+    const sql2 = "DELETE FROM media WHERE PID = ? ;"
+    const DTime = moment().format();
+    // console.log(Object.keys(req.query).length)
+    if(Object.keys(req.query).length != 1){
+        const choice = parseInt(Object.values(req.query.choice))
+        var PID = parseInt(req.query.PID)
+        console.log('title :',title)
+        console.log('body :',body)
+        console.log('choice :', choice)
+        console.log('PID :', PID)
+
+        if(choice == 1){
+            db.query(sql1, [title, body, PID], (err, results) => {
+                if(err){
+                    console.log(err)
+                }else{
+                    res.redirect('/member/your_post')
+                }
+            })
+        }else if(choice == 2){
+            db.query(sql1, [title, body, PID], (err, results) => {
+                if(err){
+                    console.log(err)
+                }else{
+                    
+                    db.query(sql2, PID, (err, results) => {
+                        if(err){
+                            console.log(err)
+                        }else{
+                            res.redirect('/member/your_post')
+                        }
+                    })
+                }
+            })
+        }else if(choice == 3){
+            db.query(sql1, [title, body, PID], (err, results) => {
+                if(err){
+                    console.log(err)
+                }else{
+
+                    const directory = [];
+                    if(req.files){
+                        const input = req.files.file
+                        // console.log(input)
+                        if(input.length > 1){
+
+                            for(let i = 0 ; i < input.length; i++){
+                                const time = new Date(moment().format())
+                                const date = time.getDate()
+                                const month = time.getMonth()+1
+                                const year = time.getFullYear()
+                                const time_string = time.getTime()
+                                const Filename = `static/upload/${month}_${date}_${year}_${time_string}_${input[i].name}`
+                                const address = `../upload/${month}_${date}_${year}_${time_string}_${input[i].name}`
+                                directory[i] = address;
+                                // console.log(Filename)
+                                input[i].mv(Filename, function (err){
+
+                                    if(err){
+
+                                        res.send(err);
+
+                                    }else{
+                                        console.log('upload file is sucessfuly')
+                                    }
+
+                                })
+                            }
+                        }else{
+                            const file = req.files.file 
+                            const Name = req.files.file.name 
+                            const time = new Date(DTime)
+                            const date = time.getDate()
+                            const month = time.getMonth()+1
+                            const year = time.getFullYear()
+                            const time_string = time.getTime()
+                            const Filename = `static/upload/${month}_${date}_${year}_${time_string}_${Name}`
+                            const address = `../upload/${month}_${date}_${year}_${time_string}_${Name}`
+                            directory[0] = address;
+                            // console.log(Filename)
+                            file.mv(Filename, err =>{
+                                if (err){
+                                    console.log(err)
+                                }else{
+                                    console.log('upload file is sucessfuly')
+                                }
+                            })
+
+                        }
+                    }else{
+                        console.log('no file upload')
+                        res.redirect('/member/your_post')
+                    }
+
+                    if(directory){
+
+                        // console.log(typeof(pid))
+                        const insert_path = " INSERT INTO media (PID, path) VALUES (?,?)"
+        
+                        for(let i = 0; i < directory.length; i++){
+                            db.query(insert_path, [PID , directory[i]],  (err, results) => {
+                                if(err){
+                                    console.log(err)
+                                
+                                }else{
+                                    // console.log(results)
+                                    
+                                    
+                                }
+                            })
+                        }
+                          
+                     }
+                     res.redirect('/member/your_post')
+
+                }
+            })
+        }
+
+
+        
+    }else{
+        var PID = parseInt(req.query.PID)
+        console.log('title :',title)
+        console.log('body :',body)
+        console.log('PID :', PID)
+
+        db.query(sql1, [title, body, PID], (err, results) => {
+            if(err){
+                console.log(err)
+            }else{
+                res.redirect('/member/your_post')
+            }
+        })
+        // console.log(req.query)
+    }
+
+    // console.log('title :',title)
+    // console.log('body :',body)
+    // console.log('choice :', choice)
+    // console.log('PID :', PID)
+    // console.log(req.query)
+    // db.query(sql1,[title, body, UID])
 });
 
 router.get('/logout', (req, res) =>{
