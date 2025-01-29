@@ -196,7 +196,7 @@
                     vid.id  = "media_inside"
                     vid.controls = true;
                     document.getElementById("media").appendChild(vid);
-                }else if(fileType[chk-1] ==  'g'){
+                }else if(fileType[chk-1] ==  'g' || fileType[chk-1] == 'G'){
                     console.log('<%=post[i].path%>')
                     console.log('picture found')
                     var img = document.createElement("img");
