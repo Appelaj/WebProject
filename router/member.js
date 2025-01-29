@@ -112,6 +112,42 @@ router.post('/comment', (req, res) => {
     })
 });
 
+router.get('/password_change', (req, res) => {
+    
+    // console.log(req.query)   
+    console.log(Object.values(req.query))
+    res.render('member/change_password', {UID : Object.values(req.query)})
+});
+
+router.post('/password_change_verify', (req, res) => {
+    const {oldPassword, newPassword} = req.body
+    const sql = "UPDATE users SET password = ? WHERE UID = ?;"
+    const sql2 = "SELECT * FROM users WHERE UID = ? AND PASSWORD = ?;"
+    const UID = Object.values(req.query)
+    console.log("New password :", newPassword)
+    console.log("Old password:", oldPassword)
+    console.log(UID[0])
+    db.query(sql2,[UID[0], md5(oldPassword)], (err,results) => {
+        if(err){
+            console.log(err)
+            res.render('member/change_password', {UID : Object.values(req.query), msg: 'Error Plese try again'})
+        }else{
+            if(results.length == 0){
+                res.render('member/change_password', {UID : Object.values(req.query), msg: 'Old Password not match'})
+            }else{
+                db.query(sql, [md5(newPassword), UID[0]], (err,results) =>{
+                    if(err){
+                        console.log(err)
+                        res.render('member/change_password', {UID : Object.values(req.query), msg: 'Error Plese try again'})
+                    }else{
+                        res.redirect('login')
+                    }
+                })
+            }
+        }
+    } )
+});
+
 router.get('/change', (req, res) => {
     
     // console.log(req.query)
