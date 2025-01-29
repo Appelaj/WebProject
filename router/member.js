@@ -388,14 +388,14 @@ router.get('/your_post', (req, res) =>{
             if(err){
                 console.log(err)
             }else{
-                console.log(results)
+                // console.log(results)
                 const par1 = results
                 
                 db.query(sql2, UID, (err,results ) =>{
                     if(err){
                         console.log(err)
                     }else{
-                        console.log(results)
+                        // console.log(results)
                         res.render('member/your_post', {information : par1 , username: username, UID: UID, yourpost: results});
                     }
                 })
@@ -485,6 +485,53 @@ router.get('/post', (req, res) =>{
     }
 });
 
+
+router.get('/edit', (req, res) =>{
+    const username = req.cookies.username;
+    const UID = req.cookies.UID;
+    const sql = " SELECT p.PID, p.title, p.UID, p.created_time, p.created_date, p.body_text, u.username FROM post AS p  LEFT JOIN users AS u ON p.UID = u.UID ORDER BY RAND() ; "
+    const sql2 = "SELECT p.PID, p.title, p.UID, p.created_time, p.created_date, p.body_text, u.username, m.`path` FROM post AS p   LEFT JOIN users AS u  ON p.UID = u.UID  LEFT JOIN media AS m ON p.PID = m.PID WHERE p.PID = ? ;"
+    const sql4 = "SELECT c.PID, c.body, c.Comment_Date, c.Comment_Time, u.username, c.UID FROM comments AS c LEFT JOIN post AS p ON p.PID = c.PID LEFT JOIN users AS u ON c.UID = u.UID WHERE c.PID = ? ;"
+    console.log(req.query)
+    if(username){
+
+        db.query(sql, (err, results) =>{
+            if(err){
+                console.log(err)
+            }else{
+                
+                const par1 = results
+            
+                    db.query(sql2, [Object.values(req.query)], (err, results) =>{
+                        if(err){
+                            console.log(err)
+                            console.log("here")
+                        }else{
+                          
+                            
+                            const Post_results = results
+                            db.query(sql4, Object.values(req.query), (err, results) => {
+                                if(err){
+                                    console.log(err)
+                                    res.redirect('/member/edit_post')
+                                }else{
+                                    
+                                    res.render('member/edit_post', {information : par1 , username: username, post: Post_results
+                                        , UID: UID, PID: Object.values(req.query), comment: results} )
+                                        
+                                }
+                            })
+                            
+                        }
+                    })
+                 
+                
+            }
+        })
+    }else{
+        res.redirect('/member/login')
+    }
+});
 
 router.get('/logout', (req, res) =>{
     const username = req.cookies.username;

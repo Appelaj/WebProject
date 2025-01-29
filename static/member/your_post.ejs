@@ -17,8 +17,8 @@
     <header >
         <div id="h1"><img src="../images/kita.png" id="logo"></div>
         <div id="title"><a href="/member/member" style="color: white;">Metro</a></div>
+        <div id="search_box"></div>
         <div id="h2">
-            <div id="search_box">Welcome</div>
             <a href="/member/create"><div id="Create_post" >new post </div></a>
         </div>
         <div id="h3"><a href="/member/your_post" style="color: white;"><%=locals?.username?username:""%> </a><span onclick="usermenu_show()">
@@ -160,11 +160,18 @@
                     document.getElementById("main_part").appendChild(div);
     
                     var div = document.createElement('div');
-                    div.id = 'title_box'
+                    div.className = 'title_box'
+                    div.id = 'manage'+<%=i%>;
                     div.innerHTML = '<a href="/member/post?PID=<%=yourpost[i].PID%>"><%=yourpost[i].title%></a>';
                     // '<%=information[i].title%>'
                     document.getElementById('div'+<%=i%>).appendChild(div);
-    
+
+                    var span = document.createElement('span');
+                    // span.id = 'manage';
+                    span.className = 'manage';
+                    span.innerHTML = '<a href="/member/edit?PID=<%=yourpost[i].PID%>" style = "color: #EEEEEE;">manage</a>'
+                    document.getElementById('manage'+<%=i%>).appendChild(span);
+
                     var div = document.createElement('div');
                     div.className = 'author_box';
                     div.id = 'Author'+<%=i%>;

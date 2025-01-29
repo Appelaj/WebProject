@@ -21,7 +21,7 @@
         <div id="h2">
             <a href="/member/create"><div id="Create_post" >new post </div></a>
         </div>
-        <div id="h3"><a href="/member/your_post" style="color: white;"><%=locals?.username?username:""%> </a><span onclick="usermenu_show()">
+        <div id="h3"><a href="/member/your_post" style="color: white;"><%=locals?.username?username:""%> </a> <span onclick="usermenu_show()">
             <img style="width: 20px; cursor: pointer;  float: right; margin-top: 13px; " src="../images/downarrow.png" alt="">
             </span>
         </div>        
@@ -73,9 +73,13 @@
         
     <sidebar id="side">
         <usermenu class="user_menu">
-            <a href="/member/logout"><div id="userMenu">logout</div></a>
-            <a href="/member/change?UID=<%=UID%>"><div id="userMenu" style="margin-top: 60px;">change username</div></a>
-            <a href="/member/password_change?UID=<%=UID%>"><div id="userMenu" style="margin-top: 120px;">change password</div></a>
+            
+                <a href="/member/logout"><div id="userMenu">logout</div></a>
+                <a href="/member/change?UID=<%=UID%>"><div id="userMenu" style="margin-top: 60px;">change_username</div></a>
+                <a href="/member/password_change?UID=<%=UID%>"><div id="userMenu" style="margin-top: 120px;">change password</div></a>
+            <!-- <div>
+                <a href="/member/change_username"><div id="userMenu">change username</div></a>
+            </div> -->
         </usermenu>
         
             <div id="suggestion_box">
@@ -108,16 +112,40 @@
         
         <div id="main_part" class="white">
             <div style="display: block; width: 100%; height: 80px; overflow: hidden;"></div>
-            <!-- <div class=" post" >
+            <div class="post" style="background-color: transparent;"><h1><a href="#" style="color: blue;">Edit</a>
+                 <span style="float: right;"><a href="#" style="color: red;">Delete</a></span></h1></div>
+            <div class="post" >
                 <div>
-                    <div id="title_box"><%=information[0].title%></div>
-                    <div class="author_box"><%=information[0].username%>'s &nbsp; Post &nbsp;&nbsp;
+                    <div id="title_box"><%=post[0].title%></div>
+                    <div id="author_box"><%=post[0].username%>'s &nbsp; Post &nbsp;&nbsp;
                         Date:&nbsp;
                          <span id="date4"></span>&nbsp;
                          
                     </div>
-                </div> -->
-        </div>
+                    <div id="body_box"> &emsp;&emsp;
+                        <%=post[0].body_text%></div>
+                    <div id="media"> </div>
+                    
+                </div>
+            </div>
+            <div id="comment_section">
+                <div id="comment_header">Comments</div>
+                <div id="comment_zone">
+                    <form action="/member/comment?UID=<%=UID%>&PID=<%=PID%>" method="post">
+                        <div>
+                            <textarea id="comment_box" rows="auto" cols="auto"  maxlength="1024" name="comment" placeholder="Enter your Comment" required></textarea>
+
+                        </div>
+                        <div>
+                            <button type="submit" id="comment_submit" >Submit</button>
+                        </div>
+                    </form> 
+                    <div id="Callback_style">
+                        <%=locals?.msg?msg:""%>
+                    </div>
+                    
+                </div>
+            </div>
     </main>
 
     
@@ -134,63 +162,110 @@
         const time3 = new Date('<%=information[2].created_date%>');
         
         // console.log(time)
-        
+        console.log("UID :",<%=UID%>)
+        console.log("PID :",<%=PID%>)
+
         document.getElementById('date1').innerHTML = time1.toLocaleDateString();
         document.getElementById('date2').innerHTML = time2.toLocaleDateString();
         document.getElementById('date3').innerHTML = time3.toLocaleDateString();
         
+        const time4 = new Date('<%=post[0].created_date%>');
+        document.getElementById('date4').innerHTML = time4.toLocaleDateString();
+        // console.log( <%=post.length%>)
         
+        function resizeImg(img, height, width) {
+            img.height = height;
+            img.width = width;
+        }
         
-        // console.log('<%=information.length%>')
-        console.log('<%=UID%>')
+        // for(let i = 0; i < <%=post.length%>; i++){
         //     console.log(i)
         //     var img = document.createElement("img");
            
         //     img.id  = "media_inside"
         //     document.getElementById("media").appendChild(img);
         // }
-        // information.length
-        <% for(var i=0; i< information.length; i++) {%>
+        
+        if('<%=post[0].path%>' != null){
+            
+            <% for(var i=0; i<post.length; i++) {%>
+                var fileType = '<%=post[i].path%>';
+                var chk = fileType.length;
+                if(fileType[chk-1] == '4'){
+                    // console.log('<%=post[i].path%>')
+                    console.log('video found')
+                    var vid = document.createElement("video");
+                    vid.src = '<%=post[i].path%>';
+                    vid.id  = "media_inside"
+                    vid.controls = true;
+                    document.getElementById("media").appendChild(vid);
+                }else if(fileType[chk-1] ==  'g' || fileType[chk-1] == 'G'){
+                    console.log('<%=post[i].path%>')
+                    console.log('picture found')
+                    var img = document.createElement("img");
+                    img.src = '<%=post[i].path%>';
+                    img.id  = "media_inside"
+                    document.getElementById("media").appendChild(img);
+                }
+                // console.log('<%=post[i].path%>')
+                // var img = document.createElement("img");
+                // img.src = '<%=post[i].path%>';
+                // img.id  = "media_inside"
+                // document.getElementById("media").appendChild(img);
+            <% } %>
+        }
+
+
+        
+        console.log(<%=comment.length%>)
+        console.log(typeof('<%=comment.length%>'))
+
+
+        // console.log(<%=comment.legnth%>)
+        if('<%=comment.legnth%>' != '0'){
+            <% for(var i=0; i< comment.length ; i++) {%>
                 var div = document.createElement('div');
-                div.className = 'post';
+                // div.className = 'post';
                 div.id = 'div'+<%=i%>;
-                document.getElementById("main_part").appendChild(div);
+                // div.innerHTML = '<h1>test</h1>'
+                document.getElementById("comment_zone").appendChild(div);
 
                 var div = document.createElement('div');
-                div.id = 'title_box'
-                div.innerHTML = '<a href="/member/post?PID=<%=information[i].PID%>"><%=information[i].title%></a>';
-                // '<%=information[i].title%>'
-                document.getElementById('div'+<%=i%>).appendChild(div);
-
-                var div = document.createElement('div');
-                div.className = 'author_box';
-                div.id = 'Author'+<%=i%>;
-                div.innerHTML = "<%=information[i].username%>'s &nbsp Post";
+                div.className = 'comment_list'
+                div.innerHTML = '<%=comment[i].username%>';
+                div.id = 'Co'+<%=i%>;
+                
                 document.getElementById('div'+<%=i%>).appendChild(div);
 
                 var span = document.createElement('span');
                 span.id = 'D'+<%=i%>;
+                span.className = 'Date_comment'
                 // span.innerHTML = Created_date.toLocaleDateString();
-                document.getElementById('Author'+<%=i%>).appendChild(span);
-                
-                var Created_date = new Date('<%=information[i].created_date%>');
-                document.getElementById('D'+<%=i%>).innerHTML = '&nbsp&nbsp&nbsp&nbspDate:&nbsp;'+Created_date.toLocaleDateString();
+                document.getElementById('Co'+<%=i%>).appendChild(span);
 
-                var span = document.createElement('span');
-                span.id = 'T'+<%=i%>;
-                span.innerHTML = '&nbsp&nbsp&nbsp<%=information[i].created_time%>'
-                document.getElementById('Author'+<%=i%>).appendChild(span);
-                
+                var comment_date = new Date('<%=comment[i].Comment_Date%>');
+                document.getElementById('D'+<%=i%>).innerHTML = '&nbsp&nbsp&nbsp&nbspDate:&nbsp;'+comment_date.toLocaleDateString()+
+                '&nbsp&nbsp&nbsp<%=comment[i].Comment_Time%>';
 
+                var div = document.createElement('div');
+                div.className = 'Comment_body'
+                div.innerHTML = '&emsp;&emsp;&emsp;<%=comment[i].body%>';
+                // div.id = 'Co'+<%=i%>;
+           
+                document.getElementById('div'+<%=i%>).appendChild(div);
 
-                console.log('div'+<%=i%>)
-                console.log('<%=information[i].username%>')
             <% } %>
 
-            
-    
+        }
+
         
-        
+        // var img = document.createElement("img");
+        // img.src = '<%=post[0].path%>';
+        // img.id  = "media_inside";
+
+        // console.log('<%=post[0].path%>')
+        // console.log(img.src)
+        // document.getElementById("media").appendChild(img);
 
         
     </script>

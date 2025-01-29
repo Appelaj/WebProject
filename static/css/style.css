@@ -14,21 +14,22 @@ header{
     vertical-align: middle;
     line-height: 50px;
     position: fixed;
+    background-color: #3B1E54;
 }
 #h1 {
-    background-color: #3B1E54;
+    
     flex: 0.5;
     float: left;
     overflow: hidden;
 }
 #h2 {
-    background-color: #3B1E54;
-    flex: 10;
+    /* background-color: #3B1E54; */
+    flex: 2;
     font-weight: 200;  
     overflow: hidden;
 }
 #h3 {
-    background-color: #3B1E54;
+    /* background-color: #3B1E54; */
     flex: 2;
     color: white;
 
@@ -42,7 +43,7 @@ header{
 }
 
 #title {
-    background-color: #3B1E54;
+    /* background-color: #3B1E54; */
     flex: 1;
     text-align: left;
     padding-left: 5px;
@@ -50,12 +51,13 @@ header{
 }
 #search_box {
     display: inline-block;
-    font-size: 15px;
-    background-color: azure;
-    width: 50%;
+    /* font-size: 15px; */
+    /* background-color: azure; */
+    width: 20%;
     height: 30px;
+    float: right;
     margin-top: 10px;
-    
+    flex: 4;
     line-height: 30px;
     border-radius: 10px;
     margin-left: 15px;
@@ -66,7 +68,7 @@ header{
     display: inline-block;
     font-size: 15px;
     background-color:#ac9cbb;
-    width:10%;
+    width:50%;
     height: 30px;
     margin-top: 10px;
     line-height: 30px;
@@ -163,11 +165,13 @@ header{
     line-height: 45px;
     vertical-align: middle;
     /* background-color: #9c9c9c; */
-    border-bottom: 5px dashed #9c9c9c;
+    /* border-bottom: 5px dashed #9c9c9c; */
     overflow: hidden;
     font-size: 20px;
     color: black;
+    background-color: #a0a0a0;
 }
+
 
 #author_box {
     display: block;
@@ -446,6 +450,7 @@ header{
     font-style:;
     box-shadow:5px 5px #72725d;
 }
+
 
 
 /* comment section end */

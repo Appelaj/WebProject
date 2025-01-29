@@ -143,3 +143,36 @@
     margin-bottom: 20px;
     padding-right: 2%;
 }
+
+.title_box {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding-left:20px;
+    line-height: 45px;
+    vertical-align: middle;
+    /* background-color: #9c9c9c; */
+    /* border-bottom: 5px dashed #9c9c9c; */
+    overflow: hidden;
+    font-size: 20px;
+    color: black;
+    background-color: #a0a0a0;
+}
+
+.manage{
+    
+    float: right;
+    font-size: small;
+    margin-right: 30px;
+    margin-top: 15px;
+    line-height: 20px;
+    vertical-align: middle;
+    text-align: center;
+    display: block;
+    width: 60px;
+    height: 20px;
+    background-color: #444444;
+    border-radius: 50px;
+    /* border:black; */
+    /* border-style: dashed; */
+}
