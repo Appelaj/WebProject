@@ -21,7 +21,7 @@
             <div id="search_box">Welcome</div>
             <a href="/member/create"><div id="Create_post" >new post </div></a>
         </div>
-        <div id="h3"><%=locals?.username?username:""%> <span onclick="usermenu_show()">
+        <div id="h3"><a href="/member/your_post" style="color: white;"><%=locals?.username?username:""%> </a><span onclick="usermenu_show()">
             <img style="width: 20px; cursor: pointer;  float: right; margin-top: 13px; " src="../images/downarrow.png" alt="">
             </span>
         </div>        
@@ -54,7 +54,7 @@
              font-size: 20px;">menu 
             <!-- <span onclick="hide_menu()"><img id="menu_symbol" src="../images/menu_symbol.png" alt=""></span> -->
         </div>
-            <a href="#"><div class="channel">home</div></a>
+            <a href="/member/member"><div class="channel">home</div></a>
             <!-- <a href="#"><div class="channel">popular </div></a> -->
         </div>
         <!-- <div class="menu purple">
@@ -139,14 +139,10 @@
         document.getElementById('date2').innerHTML = time2.toLocaleDateString();
         document.getElementById('date3').innerHTML = time3.toLocaleDateString();
         
-        // const time4 = new Date('<%=post[0].created_date%>');
-        // document.getElementById('date4').innerHTML = time4.toLocaleDateString();
-        // console.log( <%=post.length%>)
         
         
         // console.log('<%=information.length%>')
         console.log('<%=UID%>')
-        // for(let i = 0; i < <%=post.length%>; i++){
         //     console.log(i)
         //     var img = document.createElement("img");
            
@@ -195,14 +191,6 @@
     
         
         
-
-        // var img = document.createElement("img");
-        // img.src = '<%=post[0].path%>';
-        // img.id  = "media_inside";
-
-        // console.log('<%=post[0].path%>')
-        // console.log(img.src)
-        // document.getElementById("media").appendChild(img);
 
         
     </script>

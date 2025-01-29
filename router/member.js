@@ -124,8 +124,8 @@ router.post('/password_change_verify', (req, res) => {
     const sql = "UPDATE users SET password = ? WHERE UID = ?;"
     const sql2 = "SELECT * FROM users WHERE UID = ? AND PASSWORD = ?;"
     const UID = Object.values(req.query)
-    console.log("New password :", newPassword)
-    console.log("Old password:", oldPassword)
+    // console.log("New password :", newPassword)
+    // console.log("Old password:", oldPassword)
     console.log(UID[0])
     db.query(sql2,[UID[0], md5(oldPassword)], (err,results) => {
         if(err){
@@ -377,12 +377,42 @@ router.post('/creating', (req, res) =>{
 //     }
 // });
 
+router.get('/your_post', (req, res) =>{
+    const username = req.cookies.username;
+    const UID = req.cookies.UID;
+    const sql1 = " SELECT p.PID, p.title, p.UID, p.created_time, p.created_date, p.body_text, u.username FROM post AS p  LEFT JOIN users AS u ON p.UID = u.UID ORDER BY RAND() ; "
+    const sql2 = " SELECT p.PID, p.title, p.UID, p.created_time, p.created_date, p.body_text, u.username FROM post AS p  LEFT JOIN users AS u ON p.UID = u.UID WHERE p.UID = ? ; "
+    if(username){
+
+        db.query(sql1, (err, results) =>{
+            if(err){
+                console.log(err)
+            }else{
+                console.log(results)
+                const par1 = results
+                
+                db.query(sql2, UID, (err,results ) =>{
+                    if(err){
+                        console.log(err)
+                    }else{
+                        console.log(results)
+                        res.render('member/your_post', {information : par1 , username: username, UID: UID, yourpost: results});
+                    }
+                })
+            }
+        })
+        // res.render('member/member', {username: username} )
+
+    }else{
+        res.redirect('/member/login')
+    }
+    
+})
+
 router.get('/member', (req, res) =>{
     const username = req.cookies.username;
     const UID = req.cookies.UID;
     const sql = " SELECT p.PID, p.title, p.UID, p.created_time, p.created_date, p.body_text, u.username FROM post AS p  LEFT JOIN users AS u ON p.UID = u.UID ORDER BY RAND() ; "
-    const sql2 = "SELECT p.PID, p.title, p.UID, p.created_time, p.created_date, p.body_text, u.username, m.`path` FROM post AS p   LEFT JOIN users AS u  ON p.UID = u.UID  LEFT JOIN media AS m ON p.PID = m.PID WHERE p.PID = ?"
-    const sql3 = "SELECT PID FROM post ORDER BY PID DESC LIMIT 1 ;"
     
     if(username){
 
@@ -391,25 +421,8 @@ router.get('/member', (req, res) =>{
                 console.log(err)
             }else{
                 // console.log(results)
-                // res.render('member/member', {information : results , username: username} )
                 const par1 = results
-                db.query(sql3, (err,results) =>{
-                    if(err){
-                        console.log(err)
-                    }else{
-                        const lastest_post = parseInt(Object.values(results[0]))
-                        db.query(sql2, lastest_post, (err, results) =>{
-                            if(err){
-                                console.log(err)
-                            }else{
-                                // console.log(results)
-                                res.render('member/member', {information : par1 , username: username, post: results, UID: UID} )
-                                
-                            }
-                        })
-                    }
-                })
-                
+                 res.render('member/member', {information : par1 , username: username, UID: UID} )
             }
         })
         // res.render('member/member', {username: username} )
@@ -424,7 +437,6 @@ router.get('/post', (req, res) =>{
     const UID = req.cookies.UID;
     const sql = " SELECT p.PID, p.title, p.UID, p.created_time, p.created_date, p.body_text, u.username FROM post AS p  LEFT JOIN users AS u ON p.UID = u.UID ORDER BY RAND() ; "
     const sql2 = "SELECT p.PID, p.title, p.UID, p.created_time, p.created_date, p.body_text, u.username, m.`path` FROM post AS p   LEFT JOIN users AS u  ON p.UID = u.UID  LEFT JOIN media AS m ON p.PID = m.PID WHERE p.PID = ? ;"
-    const sql3 = "SELECT PID FROM post ORDER BY PID DESC LIMIT 1 ;"
     const sql4 = "SELECT c.PID, c.body, c.Comment_Date, c.Comment_Time, u.username, c.UID FROM comments AS c LEFT JOIN post AS p ON p.PID = c.PID LEFT JOIN users AS u ON c.UID = u.UID WHERE c.PID = ? ;"
     console.log(req.query)
     if(username){
@@ -436,38 +448,33 @@ router.get('/post', (req, res) =>{
                 // console.log(results)
                 // res.render('member/member', {information : results , username: username} )
                 const par1 = results
-                db.query(sql3, (err,results) =>{
-                    if(err){
-                        console.log(err)
-                    }else{
-                        // const lastest_post = parseInt(Object.values(results[0]))
-                        db.query(sql2, [Object.values(req.query)], (err, results) =>{
-                            if(err){
-                                console.log(err)
-                                console.log("here")
-                            }else{
-                                // console.log(results[3].PID)
-                                
-                                const Post_results = results
-                                db.query(sql4, Object.values(req.query), (err, results) => {
-                                    if(err){
-                                        console.log(err)
-                                        res.redirect('/member/post')
-                                    }else{
-                                        // console.log(results)
-                                        // console.log(results.length)
-                                        res.render('member/post', {information : par1 , username: username, post: Post_results
-                                            , UID: UID, PID: Object.values(req.query), comment: results} )
-                                            
-                                    }
-                                })
-                                // console.log(results)
-                                // res.render('member/post', {information : par1 , username: username, post: results, UID: UID, PID: Object.values(req.query)} )
-                                
-                            }
-                        })
-                    }
-                })
+            
+                    db.query(sql2, [Object.values(req.query)], (err, results) =>{
+                        if(err){
+                            console.log(err)
+                            console.log("here")
+                        }else{
+                            // console.log(results[3].PID)
+                            
+                            const Post_results = results
+                            db.query(sql4, Object.values(req.query), (err, results) => {
+                                if(err){
+                                    console.log(err)
+                                    res.redirect('/member/post')
+                                }else{
+                                    // console.log(results)
+                                    // console.log(results.length)
+                                    res.render('member/post', {information : par1 , username: username, post: Post_results
+                                        , UID: UID, PID: Object.values(req.query), comment: results} )
+                                        
+                                }
+                            })
+                            // console.log(results)
+                            // res.render('member/post', {information : par1 , username: username, post: results, UID: UID, PID: Object.values(req.query)} )
+                            
+                        }
+                    })
+                 
                 
             }
         })

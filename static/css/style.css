@@ -55,6 +55,7 @@ header{
     width: 50%;
     height: 30px;
     margin-top: 10px;
+    
     line-height: 30px;
     border-radius: 10px;
     margin-left: 15px;
@@ -73,6 +74,7 @@ header{
     margin-left: 15px;
  
 }
+
 
 
 
@@ -251,6 +253,7 @@ header{
     text-align: center;
     vertical-align: middle;
     color: white;
+    overflow: hidden;
 }
 #article {
     display: block;
