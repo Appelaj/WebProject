@@ -4,7 +4,7 @@
 2.ทำการเปิด mysql ผ่าน xampp    <br>
 3.ทำการ add database ดัวยไฟล์ database.sql <br>
 คำสั่ง ไปที่ bin ของ mysql ตัวอย่างเครื่องของผม cd c:/xampp/mysql/bin <br>
-จากนั้นใช้คำสั่ง mysql -u root -p < {path ของ database.sql} <br>
+จากนั้นใช้คำสั่ง mysql -u root -p < path ของ database.sql <br>
 
 4.จากนั้นใข้ heidi เข้าไปเพิ่มสิทธ์การเข้าถึงของuser ให้ตรงกับ <br>
 DB_USER = web <br>
