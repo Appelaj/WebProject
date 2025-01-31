@@ -11,6 +11,8 @@ DB_USER = web <br>
 DB_PASSWORD = 1234 <br>
 5.จากนั้นก็ไปที่ path ของ local machine เเล้วใช้คำสั่ง npm run start <br>
 6.ไปตาม link ที่ขึ้นใน terminal ของ vscode <br><br>
+
+<h2>เเนะนำให้ login ผ่าน user: Maple password: 1234 เนื่องจากจะได้ลองระบบ your post เเละ edit post </h2>
 <h1>featured ที่มี</h1><br>
 1.login<br>
 2.register<br>
