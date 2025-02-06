@@ -1,5 +1,6 @@
 <h1>ขั้นตอนการติดตั้ง</h1>
 <h2>Implement on this version (10.4.32-MariaDB) ถ้าเกิด error ให้ลงversion นี้</h2>
+<h2>nodejs is required</h2>
 1.clone repo ไปที่ local machine <br>
 2.ทำการเปิด mysql ผ่าน xampp    <br>
 3.ทำการ add database ดัวยไฟล์ database.sql <br>
