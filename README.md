@@ -10,6 +10,7 @@
 4.จากนั้นใข้ heidi เข้าไปเพิ่มสิทธ์การเข้าถึงของuser ให้ตรงกับ <br>
 DB_USER = web <br>
 DB_PASSWORD = 1234 <br>
+ให้สิทธ์ทุกอย่างบนdatabasseที่ชื่อ webproject กับ user ชื่อ web <br>
 5.จากนั้นก็ไปที่ path ของ local machine เเล้วใช้คำสั่ง npm run start <br>
 6.ไปตาม link ที่ขึ้นใน terminal ของ vscode <br><br>
 
