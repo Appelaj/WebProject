@@ -7,7 +7,7 @@
 คำสั่ง ไปที่ bin ของ mysql ตัวอย่างเครื่องของผม cd c:/xampp/mysql/bin <br>
 จากนั้นใช้คำสั่ง mysql -u root -p < path ของ database.sql <br>
 
-4.จากนั้นใข้ heidi เข้าไปเพิ่มสิทธ์การเข้าถึงของuser ให้ตรงกับ <br>
+4.จากนั้นใช้ heidi เข้าไปเพิ่มสิทธ์การเข้าถึงของuser ให้ตรงกับ <br>
 DB_USER = web <br>
 DB_PASSWORD = 1234 <br>
 ให้สิทธ์ทุกอย่างบนdatabasseที่ชื่อ webproject กับ user ชื่อ web <br>
